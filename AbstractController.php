@@ -118,7 +118,10 @@ abstract class AbstractController {
 	}
 
 	public function redirect_to($routeName) {
-
+		if (substr($routeName, 0, 1) == '/') {
+			$routeName = substr($routeName, 1);
+		}
+		header("Location: ".$this->config['document_root'].$routeName);
 	}
 }
 
