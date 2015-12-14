@@ -38,9 +38,13 @@ class Database {
 
 	function insert($queryString, $data = null){
 		$statement = $this->pdo->prepare($queryString);
-		$statement->execute($data);
 
-		$lastId = $this->pdo->lastInsertId();
+		if ($statement->execute($data)) {
+			$lastId = $this->pdo->lastInsertId();
+		} else {
+			$lastId = null;
+		}
+
 		return $lastId;
 	}
 
