@@ -18,6 +18,7 @@ abstract class AbstractController {
 	protected $_action;
 
 	protected $print_template;
+	protected $custom_template;
 	protected $sendJson;
 
 	public function __construct($config = null){
@@ -36,6 +37,7 @@ abstract class AbstractController {
 		$this->view = '';
 		$this->_init = '';
 		$this->_action = '';
+		$this->custom_template = null;
 		$this->number = 0;
 	}
 
@@ -68,7 +70,11 @@ abstract class AbstractController {
 
 	public function getTemplate(){
 		if ($this->print_template) {
-			$templateFile = 'Template/'.$this->config['template'].'.phtml';
+			if ($this->custom_template == null) {
+				$templateFile = 'Template/'.$this->config['template'].'.phtml';
+			} else {
+				$templateFile = 'Template/'.$this->custom_template.'.phtml';
+			}
 
 			$this->template = $this->renderView($templateFile);
 			return $this->template;
